@@ -18,7 +18,7 @@ class User(db.Model, UserMixin):
     follower_users  = db.relationship("Relation", foreign_keys="Relation.id_follower", backref="follower", lazy=True)
     posts           = db.relationship("Post", backref="owner", lazy=True)
     comments        = db.relationship("Comment", backref="comments_owner", lazy=True)
-    like            = db.relationship("like", backref="likes_owner", lazy=True)
+    like            = db.relationship("Like", backref="likes_owner", lazy=True)
 
 class Relation(db.Model):
     __tablename__   = "relations"

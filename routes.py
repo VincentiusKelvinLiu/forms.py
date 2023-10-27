@@ -8,7 +8,7 @@ from application.forms import *
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if current_user.is_authenticated:
-        return redirect(url_for('protected'))
+        return redirect(url_for('profile'))
 
     form = LoginForm()
 
@@ -19,11 +19,11 @@ def login():
         user = User.query.filter_by(username=username).first()
         if user and password == user.password:
             login_user(user)
-            return redirect(url_for('protected'))
+            return redirect(url_for('profile'))
         else:
             flash('Invalid username or password', 'error')
 
-    return render_template('login.html', form=form)
+    return render_template('login.html', title="Login", form=form)
 
 @app.route('/logout')
 @login_required
@@ -31,14 +31,15 @@ def logout():
     logout_user()
     return redirect(url_for('login'))
 
-@app.route('/protected')
+@app.route('/profile')
 @login_required
-def protected():
-    return 'This is a protected page. You are logged in as ' + current_user.username
+def profile():
+    return render_template('profile.html', title=f'{current_user.fullname} Profile')
 
 @app.route('/')
+@login_required
 def index():
-    return 'ok'
+    return render_template('index.html', title='Home')
 
 if __name__ == '__main__':
     app.run(debug=True)

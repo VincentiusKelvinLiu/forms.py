@@ -8,7 +8,7 @@ from application.forms import *
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if current_user.is_authenticated:
-        return redirect(url_for('profile'))
+        return redirect(url_for('protected'))
 
     form = LoginForm()
 
@@ -19,7 +19,7 @@ def login():
         user = User.query.filter_by(username=username).first()
         if user and password == user.password:
             login_user(user)
-            return redirect(url_for('profile'))
+            return redirect(url_for('protected'))
         else:
             flash('Invalid username or password', 'error')
 
@@ -44,9 +44,11 @@ def index():
 @app.route('/signup')
 def signup():
     form = SignUpForm()
-    return render_template('signup.html', title='signup', form=form)
+    return render_template('signup.html', title='SignUp', form=form)
 
 @app.route('/about')
 def about():
     return render_template('about.html', title='About')
 
+if __name__ == '__main__':
+    app.run(debug=True)

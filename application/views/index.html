@@ -25,5 +25,12 @@
         </form>
     </div>
 
-    
+    <div class="post-container"> 
+        {% for post in posts %}
+            <div class="post" style="border: 1px black solid; margin: 10px 0px;">
+                <img src="{{ url_for('static', filename='' + post.photo) }}"alt="Post Image">
+                <p>{{ post.caption }}</p>
+            </div>
+        {% endfor %}    
+    </div>
 {% endblock content %}

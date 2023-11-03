@@ -42,6 +42,8 @@ def profile():
 def index():
     form = CreatePostForm()
 
+    posts = Post.query.filter_by(author_id = current_user.id).all()
+
     if form.validate_on_submit():
         post = Post(
             author_id = current_user.id,
@@ -50,9 +52,7 @@ def index():
         post.photo = save_image(form.post_pic.data)
         db.session.add(post)
         db.session.commit()
-        flash('Your image has been posted ❤!', 'success')
-
-    posts = Post.query.filter_by(author_id = current_user.id).all()
+        flash('Your image has been posted 🩷!', 'success')
 
     return render_template('index.html', title='Home', form=form, posts=posts)
 

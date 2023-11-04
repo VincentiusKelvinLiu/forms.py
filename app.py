@@ -7,5 +7,5 @@ def main():
     DEBUG = os.environ.get('FLASK_DEBUG')
     HOST = os.environ.get('HOST_DEV')
     app.run(host=HOST, port=PORT, debug=DEBUG)
-    if __name__ == "_main_":
-        main()
+if __name__ == "__main__":
+    main()

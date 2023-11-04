@@ -1,5 +1,6 @@
 from flask import render_template, redirect, url_for, flash, request
 from flask_login import login_user, login_required, logout_user, current_user
+from werkzeug.security import generate_password_hash, check_password_hash
 
 from application import app
 from application.models import *
@@ -40,9 +41,7 @@ def logout():
 @app.route('/<string:username>')
 @login_required
 def profile(username):
-
-    posts = current_user.posts
-    return render_template('profile.html', title=f'{current_user.fullname} Profile', posts=posts)
+    return render_template('profile.html', title=f'{current_user.fullname} Profile')
 
 @app.route('/', methods=['GET', 'POST'])
 @login_required

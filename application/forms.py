@@ -20,6 +20,7 @@ class SignUpForm(FlaskForm):
     submit              = SubmitField("sign up")
 
 class EditProfileForm(FlaskForm):
+    username            = StringField("username", validators=[DataRequired(), Length(min=4, max=12)])
     password            = None
     confirm_password    = None
     email               = None  

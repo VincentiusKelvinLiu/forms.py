@@ -40,22 +40,22 @@
             </div>
 
             <div class="">
-                {{ form.email.label(class="") }}
+                {{ form.bio.label(class="") }}
 
-                {% if form.email.errors%}
-                    {{ form.email(class="") }}
+                {% if form.bio.errors%}
+                    {{ form.bio(class="") }}
                     <div class="">
-                        {% for error in form.email.errors %}
+                        {% for error in form.bio.errors %}
                             <span>{{ error }}</span>
                         {% endfor %}
                     </div>
                 {% else %}
-                    {{ form.email(class="form-control ") }}
+                    {{ form.bio(class="form-control ") }}
                 {% endif %}
 
             </div>
 
-            <div class="">
+            <div class="form-group">
                 {{ form.password.label(class="") }}
 
                 {% if form.password.errors%}
@@ -67,22 +67,6 @@
                     </div>
                 {% else %}
                     {{ form.password(class="form-control ") }}
-                {% endif %}
-
-            </div>
-
-            <div class="">
-                {{ form.confirm_password.label(class="") }}
-
-                {% if form.confirm_password.errors%}
-                    {{ form.confirm_password(class="") }}
-                    <div class="">
-                        {% for error in form.password.errors %}
-                            <span>{{ error }}</span>
-                        {% endfor %}
-                    </div>
-                {% else %}
-                    {{ form.confirm_password(class="form-control ") }}
                 {% endif %}
 
             </div>

@@ -19,7 +19,7 @@ class SignUpForm(FlaskForm):
     confirm_password    = PasswordField("confirm password", validators=[DataRequired(), Length(min=8), EqualTo("password")])
     submit              = SubmitField("sign up")
 
-class EditProfileForm(FlaskForm):
+class EditProfileForm(SignUpForm):
     username            = StringField("username", validators=[DataRequired(), Length(min=4, max=12)])
     password            = None
     confirm_password    = None

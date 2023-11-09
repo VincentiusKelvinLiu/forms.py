@@ -9,7 +9,7 @@ from application.utils import save_image
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if current_user.is_authenticated:
-        return redirect(url_for('profile'))
+        return redirect(url_for('index'))
 
     form = LoginForm()
 
@@ -20,7 +20,7 @@ def login():
         user = User.query.filter_by(username=username).first()
         if user and password == user.password:
             login_user(user)
-            return redirect(url_for('profile'))
+            return redirect(url_for('profile', username=username))
         else:
             flash('Invalid username or password', 'error')
 
@@ -37,7 +37,7 @@ def logout():
 def profile(username):
     posts = current_user.posts
     reverse_posts = posts[::-1]
-    return render_template('profile.html', title=f'{current_user.fullname} Profile')
+    return render_template('profile.html', title=f'{current_user.fullname} Profile', posts=reverse_posts)
 
 @app.route('/edit', methods=['GET', 'POST'])
 @login_required
@@ -53,13 +53,13 @@ def edit():
 
         if form.profile_pic.data:
             pass
-        
+
         db.session.commit()
         flash('Profile updated', 'success')
         return redirect(url_for('profile', username=current_user.username))
     
     form.username.data = current_user.username
-    form.fullname.data - current_user.fullname
+    form.fullname.data = current_user.fullname
     form.bio.data = current_user.bio
     
     return render_template('edit.html', title=f'Edit {current_user.username} Profile', form=form)
@@ -77,13 +77,13 @@ def index():
         post.photo = save_image(form.post_pic.data)
         db.session.add(post)
         db.session.commit()
-        flash('Your image has been posted ❤!', 'success')
+        flash('Your image has been posted 🩷!', 'success')
 
     page = request.args.get('page', 1, type=int)
     posts = Post.query.filter_by(author_id = current_user.id)\
                         .order_by(Post.post_date.desc())\
-                        .paginate(page=page, per_page=3)    
-    
+                        .paginate(page=page, per_page=3)
+
     # posts = current_user.posts
 
     return render_template('index.html', title='Home', form=form, posts=posts)
@@ -96,6 +96,3 @@ def signup():
 @app.route('/about')
 def about():
     return render_template('about.html', title='About')
-
-if __name__ == '__main__':
-    app.run(debug=True)

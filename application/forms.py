@@ -23,7 +23,7 @@ class EditProfileForm(SignUpForm):
     username            = StringField("username", validators=[DataRequired(), Length(min=4, max=12)])
     password            = None
     confirm_password    = None
-    email               = None  
+    email               = None
     bio                 = StringField("bio")
     profile_pic         = FileField("picture picture", validators=[FileAllowed(["jpg", "png", "jpeg"])])
     submit              = SubmitField("update profile")

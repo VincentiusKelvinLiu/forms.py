@@ -43,9 +43,6 @@ def profile(username):
 @login_required
 def edit():
     form = EditProfileForm()
-    form.username.data = current_user.username
-    form.fullname.data - current_user.fullname
-    form.bio.data = current_user.bio
 
     if form.validate_on_submit():
         user = User.query.get(current_user.id)
@@ -56,11 +53,10 @@ def edit():
 
         if form.profile_pic.data:
             pass
+
         db.session.commit()
         flash('Profile updated', 'success')
         return redirect(url_for('profile', username=current_user.username))
-    
-    return render_template('edit.html', title=f'Edit {current_user.username} Profile', form=form)
 
 @app.route('/', methods=['GET', 'POST'])
 @login_required

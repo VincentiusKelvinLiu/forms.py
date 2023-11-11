@@ -34,6 +34,11 @@
                 </div>
                 <img src="{{ url_for('static', filename='' + post.photo) }}" alt="Post Image">
                 <p>{{ post.caption }}</p>
+
+                <div class="post-footer">
+                    <span id="likeBtn">❤{{post.likes | length}}</span>
+                    <span id="commentBtn">🚩{{ post.comments | length }}</span>
+                </div>
             </div>
         {% endfor %}
     </div>

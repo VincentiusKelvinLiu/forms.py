@@ -99,7 +99,7 @@ def about():
 
 @app.route('/like/<int:post_id>', methods=["POST"])
 @login_required
-def like():
+def like(post_id):
     like = Like.query.filter_by(user_id=current_user,post_id=post_id).first()
     if not like: 
         like = Like(user_id=current_user.id, post_id=post_id)

@@ -100,10 +100,13 @@ def about():
 @app.route('/like/<int:post_id>', methods=["POST"])
 @login_required
 def like():
-    like = Like.query.filter_by(user_id == current_user and post_id == post_id)
+    like = Like.query.filter_by(user_id=current_user,post_id=post_id).first()
     if not like: 
         like = Like(user_id=current_user.id, post_id=post_id)
         db.session.add(like)
         db.session.commit()
         return make_response(200, jsonify({"status" : True}))
-    return make_response(403, jsonify({"status" : False}))
+    
+    db.session.remove(like)
+    db.session.commit()
+    return make_response(200, jsonify({"status" : False}))

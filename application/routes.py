@@ -1,4 +1,4 @@
-from flask import render_template, redirect, url_for, flash, request
+from flask import render_template, redirect, url_for, flash, request, make_response, jsonify
 from flask_login import login_user, login_required, logout_user, current_user
 
 from application import app
@@ -96,3 +96,14 @@ def signup():
 @app.route('/about')
 def about():
     return render_template('about.html', title='About')
+
+@app.route('/like/<int:post_id>', methods=["POST"])
+@login_required
+def like():
+    like = Like.query.filter_by(user_id == current_user and post_id == post_id)
+    if not like: 
+        like = Like(user_id=current_user.id, post_id=post_id)
+        db.session.add(like)
+        db.session.commit()
+        return make_response(200, jsonify({"status" : True}))
+    return make_response(403, jsonify({"status" : False}))

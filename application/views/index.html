@@ -29,7 +29,7 @@
         {% for post in posts %}
             <div class="post">
                 <div class="post-header">
-                    <img src="{{ url_for('static', filename='' + post.posts_owner.profile_pic) }}" alt="Post owner" style="height: 30px; width: 30px;">
+                    <img src="{{ url_for('static', filename='images/' + post.posts_owner.profile_pic) }}" alt="Post owner" style="height: 30px; width: 30px;">
                     <h2>{{ post.posts_owner.username }}</h2>
                 </div>
                 <img src="{{ url_for('static', filename='' + post.photo) }}" alt="Post Image">

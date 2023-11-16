@@ -1,7 +1,7 @@
 {% extends 'layout.html' %}
 
 {% block content %}
-    <div class="form-box" style="border: 1px black solid;">
+    <div class="new-post-box" style="border: 1px black solid;">
         <h2>Create a New Post</h2>
         <form method="POST" enctype="multipart/form-data">
             {{ form.hidden_tag() }}
@@ -29,15 +29,15 @@
         {% for post in posts %}
             <div class="post">
                 <div class="post-header">
-                    <img src="{{ url_for('static', filename='images/' + post.posts_owner.profile_pic) }}" alt="Post owner" style="height: 30px; width: 30px;">
-                    <h2>{{ post.posts_owner.username }}</h2>
+                    <img src="{{ url_for('static', filename='images/' + post.posts_owner.profile_pic ) }}" alt="Post owner" style="height: 30px; width: 30px;">
+                    <h2>{{  post.posts_owner.username }}</h2>
                 </div>
                 <img src="{{ url_for('static', filename='' + post.photo) }}" alt="Post Image">
                 <p>{{ post.caption }}</p>
 
                 <div class="post-footer">
-                    <span id="likeBtn" data-post-id="{{ post.id }}">❤</span><span id="likeCounter">{{post.likes | length}}</span>
-                    <span id="commentBtn" data-post-id="{{ post.id }}">🚩</span><span id="commentCounter">{{ post.comments | length }}</span>
+                    <span id="likeBtn" data-post-id="{{ post.id }}">❤️</span><span id="likeCounter">{{post.likes | length}}</span>
+                    <span id="commentBtn" data-post-id="{{ post.id }}>🚩</span><span id="commentCounter">{{ post.comments | length }}</span>
                 </div>
             </div>
         {% endfor %}
@@ -47,14 +47,14 @@
             btn.addEventListener('click', function(){
                 console.log(this.dataset.postId);
                 const xhr = new XMLHttpRequest();
-                xhr.open('POST', '/like/${this.dataset.postId}', true);
+                xhr.open('POST', `/like/${this.dataset.postId}`, true);
                 xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
 
                 xhr.onload = function () {
                     if (xhr.status === 200) {
                         const response = JSON.parse(xhr.responseText);
                         console.log(response.status);
-                    }
+                    } 
                 };
                 xhr.send();
             })
@@ -63,10 +63,10 @@
     <div class="pagination-box">
         {% for page_number in posts.iter_pages() %}
             {% if page_number == posts.page %}
-                <a href="{{ url_for('index', page=page_number) }}" style="color: red;">{{ page_number }}</a>
+                <a href="{{ url_for('index', page=page_number) }}" style="color: red;">{{page_number}}</a>
             {% else %}
-                <a href="{{ url_for('index', page=page_number) }}" style="color: black;">{{ page_number }}</a>   
+                <a href="{{ url_for('index', page=page_number) }}" style="color: black;">{{page_number}}</a>
             {% endif %}
-        {% endfor %}        
+        {% endfor %}
     </div>
 {% endblock content %}
